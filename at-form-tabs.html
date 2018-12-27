@@ -1,0 +1,39 @@
+<link rel="import" href="../tangere/tangere.html" />
+
+<dom-module id="at-form-tabs">
+  <template>
+    <style>
+      :host {
+        display: block;
+        box-sizing: border-box;
+      }
+    </style>
+    <div>at-form-tabs works!</div>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: "at-form-tabs",
+    properties: {
+      xvaluelist: {
+        type: Array,
+        value: function() {
+          return [];
+        }
+      },
+
+      value: {
+        type: String,
+        value: ""
+      },
+
+      position: {
+        type: String,
+        value: "",
+        xvaluelist: {}
+      }
+    },
+    ready: function() {}
+  });
+</script>
