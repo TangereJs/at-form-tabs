@@ -10,11 +10,44 @@
   <link rel="import" href="../at-form-tabs.html">
 
   <style is="custom-style">
+    #elt {
+      height: 32px;
+    }
   </style>
 
 </head>
 <body unresolved>
-  <at-form-tabs></at-form-tabs>
+  <at-form-tabs id="elt"></at-form-tabs>
+
+  <div>
+    <div>Currently selected tab <span id="selectedTab"></span></div>
+  </div>
 </div>
+
+  <script>
+    document.addEventListener('WebComponentsReady', function() {
+      var selectedTab = document.getElementById('selectedTab');
+      var elt = document.getElementById('elt');
+
+      elt.xvaluelist = [
+        { title: "Title 1", value: "v1" },
+        { title: "Title 2", value: "v2" },
+        { title: "Title 3", value: "v3" },
+        { title: "Title 4", value: "v4" },
+        { title: "Title 5", value: "v5" },
+        { title: "Title 6", value: "v6" },
+        { title: "Title 7", value: "v7" },
+        { title: "Title 8", value: "v8" },
+      ];
+
+      elt.value = "v5";
+      selectedTab.textContent = elt.value;
+
+      elt.addEventListener('value-changed', function(event) {
+        selectedTab.textContent = event.detail.value;
+      });
+    });
+  </script>
+
 </body>
 </html>

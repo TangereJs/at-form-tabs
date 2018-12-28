@@ -1,0 +1,35 @@
+<link rel="import" href="../tangere/tangere.html" />
+
+<dom-module id="at-form-tab">
+  <template>
+    <style>
+      :host {
+        display: block;
+        box-sizing: border-box;
+
+        padding: 0 12px 4px 12px;
+        cursor: pointer;
+        height: 100%;
+      }
+    </style>
+    [[label]]
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: "at-form-tab",
+    properties: {
+      label: {
+        type: String,
+        value: ""
+      },
+
+      value: {
+        type: String,
+        value: ""
+      }
+    },
+    ready: function() {}
+  });
+</script>

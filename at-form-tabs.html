@@ -1,14 +1,29 @@
 <link rel="import" href="../tangere/tangere.html" />
+<link rel="import" href="at-form-tab.html">
+<link rel="import" href="../at-core-style-classes/at-core-style-classes.html">
 
 <dom-module id="at-form-tabs">
   <template>
-    <style>
+    <style include="at-core-style-classes">
       :host {
         display: block;
         box-sizing: border-box;
       }
+
+      #tabsContainer {
+        height: 100%;
+      }
+
+      at-form-tab {
+        border-bottom: 2px solid transparent;
+      }
+
+      at-form-tab.selected {
+        border-bottom: 2px solid var(--primary-color);
+      }
+
     </style>
-    <div>at-form-tabs works!</div>
+    <div id="tabsContainer" class="layout-horizontal layout-start-justified" on-click="_handleTabClick">at-form-tabs works!</div>
   </template>
 </dom-module>
 
@@ -20,20 +35,123 @@
         type: Array,
         value: function() {
           return [];
-        }
+        },
+        observer: "_xvaluelistChanged",
+        schema: {
+          items: {
+            type: "object",
+            properties: {
+              value: {
+                type: "string",
+                title: "Value"
+              },
+              title: {
+                type: "string",
+                title: "Title"
+              },
+              disabled: {
+                type: "boolean",
+                title: "Disabled"
+              }
+            }
+          }
+        },
+        title: "Tabs",
+        xgridcols: "12"
       },
 
       value: {
         type: String,
-        value: ""
+        value: "",
+        observer: "_valueChanged"
       },
 
       position: {
         type: String,
-        value: "",
-        xvaluelist: {}
+        value: "left",
+        observer: "_positionChagned",
+        xvaluelist: [
+          { title: "Left", value: "left" },
+          { title: "Center", value: "center" },
+          { title: "Right", value: "right" }
+        ],
+        xtype: "enum",
       }
     },
-    ready: function() {}
+    ready: function() {},
+
+    _xvaluelistChanged: function(newValue, oldValue) {
+      console.log(JSON.stringify(newValue));
+      
+      if (this._isString(newValue)) {
+        try {
+          this.xvaluelist = JSON.parse(newValue);
+        } catch (e) {
+          console.log(e);
+        }
+        return;
+      }
+
+      if (!this._isArray(newValue)) return;
+      
+      // clear previous data if there are no slotted items 
+      Polymer.dom(this.$.tabsContainer).innerHTML = "";
+
+      if (newValue.length == 0) return;
+
+      var self = this;
+      newValue.forEach(function(tabDef) {
+        var formTab = self.create('at-form-tab');
+        formTab.label = tabDef.title;
+        Polymer.dom(formTab).classList.add('font-body1');
+        self.toggleClass('selected', tabDef.value == self.value, formTab);
+        formTab.setAttribute('id', tabDef.value);
+        self.toggleAttribute('disabled', tabDef.disabled, formTab);
+
+        Polymer.dom(self.$.tabsContainer).appendChild(formTab);
+      });
+
+      this.selected = newValue[0].value;
+    },
+
+    _valueChanged: function(newValue, oldValue) {
+      this._selectTab(newValue);
+    },
+
+    _handleTabClick: function(event) {
+      var tab = event.target;
+      if (tab.is != "at-form-tab") return;
+
+      this._selectTab(tab.id);
+
+      this.value = tab.id;
+      this.fire('value-changed', { value: this.value }, { bubbles: false });
+    },
+
+    _selectTab: function(id) {
+      var current = Polymer.dom(this.$.tabsContainer).querySelector('.selected');
+      if (current) {
+        Polymer.dom(current).classList.remove('selected');
+      }
+
+      if (!this._isString(id) || id.length == 0) return;
+
+      var selector = '#'+id;
+      current = Polymer.dom(this.$.tabsContainer).querySelector(selector);
+      if (current) {
+        Polymer.dom(current).classList.add('selected');
+      }
+    },
+
+    _positionChagned: function(newValue, oldValue) {
+      this.toggleClass("layout-start-justified", newValue == "left", this.$.tabsContainer);
+      this.toggleClass("layout-center-justified", newValue == "center", this.$.tabsContainer);
+      this.toggleClass("layout-end-justified", newValue == "right", this.$.tabsContainer);
+    },
+
+    _isString: function(obj) { return Object.prototype.toString.call(obj) === "[object String]"; },
+
+    _isArray: function(obj) { return Object.prototype.toString.call(obj) === "[object Array]"; }
+
   });
 </script>
