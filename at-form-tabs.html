@@ -2,12 +2,13 @@
 <link rel="import" href="../at-carbon-tabs/at-carbon-tab.html">
 <link rel="import" href="../at-i18n/at-i18n-behavior.html">
 <link rel="import" href="../at-form-behaviors/at-form-behaviors.html">
-<link rel="import" href="../at-core-style-classes/at-core-style-classes.html">
+<link rel="import" href="../at-theme/at-theme.html">
 <link rel="import" href="../iron-label/iron-label.html">
+<link rel="import" href="at-form-tabs-input-validation-behavior.html">
 
 <dom-module id="at-form-tabs">
   <template>
-    <style include="at-core-style-classes">
+    <style include="at-form-common">
       :host {
         display: block;
         box-sizing: border-box;
@@ -39,18 +40,20 @@
       }
 
     </style>
-    <div>
+    <div id="atContainer" class="at-container">
       <iron-label hidden$="[[hideLabel]]" id="label" for="input">{{label}}</iron-label>
+      <div id="contentContainer" class="at-content-container">
+        <div id="tabsContainer" class="layout-horizontal layout-start-justified" on-click="_handleTabClick">at-form-tabs works!</div>
+      </div>
+      <div id="hint"></div>
     </div>
-    <div id="tabsContainer" class="layout-horizontal layout-start-justified" on-click="_handleTabClick">at-form-tabs works!</div>
-    <div id="hint"></div>
   </template>
 </dom-module>
 
 <script>
   Polymer({
     is: "at-form-tabs",
-    behaviors: [Tangere.behaviors.i18n, Tangere.behaviors.formUIGeneric],
+    behaviors: [Tangere.behaviors.i18n, Tangere.behaviors.formUIGeneric, Tangere.behaviors.AtFormTabsInputValidation],
     properties: {
       /**
        * Element's label for element display purposes
@@ -170,6 +173,10 @@
       }
     },
 
+    observers: [
+      '_internalValidStateUpdate(required)'
+    ],
+
     $meta: [{
       title: "Tabs",
       type: "element",
@@ -180,13 +187,36 @@
 
     _disabledChanged: function(newValue, oldValue) {
       this.toggleAttribute('disabled', newValue, this);
+      
+      var container = this.$.atContainer;
+      this.toggleClass('disabled', newValue, container);
     },
 
     _hideChanged: function(newValue, oldValue) {
       this.toggleAttribute('hidden', newValue, this);
     },
 
-    ready: function() {},
+    ready: function() {
+      this._isReady = true;
+      this._internalValidStateUpdate(this.required);
+    },
+
+    _internalValidStateUpdate: function(required) {
+      if (!this._isReady) return;
+        
+      if (this._showErrorsWhenAttached) {
+        this._showErrorsWhenAttached = undefined;
+        this.validate(true);
+        return;
+      
+      } else if (this._clearErrorsWhenAttached) {
+        this._clearErrorsWhenAttached = undefined;
+        this.validate(false);
+        return;
+      }
+
+      this.validate();
+    },
 
     _xvaluelistChanged: function(newValue, oldValue) {
 
@@ -225,6 +255,51 @@
 
     _valueChanged: function(newValue, oldValue) {
       this._selectTab(newValue);
+      
+      if (this._isReady) {
+        this._fireValueChangedEvent(this.value);
+      }
+
+      // show validation result when autoValidate is enabled
+      if(this.autoValidate) this._validate(true);
+    },
+
+    validate: function (showError) {
+      if (!this.$ && this.autoValidate == false && showError == true) {
+        // showError should be true when _internalValidStateUpdate is called from ready after element is attached
+        this._showErrorsWhenAttached = true;
+
+      } else if (!this.$ && this.autoValidate == true && showError == false) {
+        this._clearErrorsWhenAttached = true;
+      }
+
+      if(showError === undefined) showError = this.autoValidate;
+
+      return this._validate(showError);
+
+    },
+
+    _validate: function(showError) {
+
+      var validationResult = this._validateBaseData();
+      this._handleValidationResult(validationResult);
+      if (!validationResult.isValid) {
+        return validationResult.isValid;
+      }
+
+      validationResult = this._validateData(this, this.value, this.T.bind(this));
+      if(showError) this._handleValidationResult(validationResult);
+
+      return validationResult.isValid;
+    },
+
+    _updateUIValidState: function (isValid) {
+      if (!this.$) return;
+
+      var label = this.$.label;
+      this.toggleClass('error', !isValid, label);
+      var contentContainer = this.$.contentContainer;
+      this.toggleClass('error', !isValid, contentContainer);
     },
 
     _handleTabClick: function(event) {

@@ -36,14 +36,20 @@
       <div>Currently selected tab <span id="selectedTab2"></span></div>
     </div>
   </div>
+
+  <div class="demo-container">
+    <at-form-tabs id="elt3" class="elt"></at-form-tabs>
+  
+    <div>
+      <div>Currently selected tab <span id="selectedTab3"></span></div>
+    </div>
+  </div>
 </div>
 
   <script>
     document.addEventListener('WebComponentsReady', function() {
-      var selectedTab = document.getElementById('selectedTab1');
-      var elt = document.getElementById('elt1');
-
-      elt.xvaluelist = [
+      
+      var valuelist1 = [
         { title: "Title 1", value: "v1" },
         { title: "Title 2", value: "v2" },
         { title: "Title 3", value: "v3" },
@@ -53,18 +59,10 @@
         { title: "Title 7", value: "v7" },
         { title: "Title 8", value: "v8" },
       ];
+      initDemo('elt1', 'selectedTab1', valuelist1, "v5");
+      
 
-      elt.value = "v5";
-      selectedTab.textContent = elt.value;
-
-      elt.addEventListener('value-changed', function(event) {
-        selectedTab.textContent = event.detail.value;
-      });
-
-      var selectedTab2 = document.getElementById('selectedTab2');
-      var elt2 = document.getElementById('elt2');
-
-      elt2.xvaluelist = [
+      var valuelist2 = [
         { title: "Title 1", value: "v1" },
         { title: "Title 2", value: "v2", disabled: true },
         { title: "Title 3", value: "v3" },
@@ -72,15 +70,37 @@
         { title: "Title 5", value: "v5" },
         { title: "Title 6", value: "v6", disabled: true },
         { title: "Title 7", value: "v7" },
-        { title: "Title 8", value: "v8", disabled: true },
+        { title: "Title 8", value: "v8", disabled: true }
       ];
 
-      elt2.value = "v5";
-      selectedTab2.textContent = elt.value;
+      initDemo('elt2', 'selectedTab2', valuelist2, "v5");
 
-      elt2.addEventListener('value-changed', function(event) {
-        selectedTab2.textContent = event.detail.value;
-      });
+      var valuelist3 = [
+        { title: "Title 1", value: "v1" },
+        { title: "Title 2", value: "v2", disabled: true },
+        { title: "Title 3", value: "v3", badgeLabel: "Label 1", badgeColor: "red" },
+        { title: "Title 4", value: "v4", disabled: true },
+        { title: "Title 5", value: "v5" },
+        { title: "Title 6", value: "v6", disabled: true },
+        { title: "Title 7", value: "v7", badgeLabel: "Label 2", badgeColor: "blue" },
+        { title: "Title 8", value: "v8", disabled: true }
+      ];
+      initDemo('elt3', 'selectedTab3', valuelist3, undefined, true);
+
+      function initDemo(eltSelector, valueEchoSelector, xvaluelist, initialValue, required) {
+        var selectedTab = document.getElementById(valueEchoSelector);
+        var elt = document.getElementById(eltSelector);
+
+        elt.xvaluelist = xvaluelist;
+        elt.value = initialValue;
+        elt.autoValidate = true;
+        elt.required = !!required;
+
+        elt.addEventListener('value-changed', function(event) {
+          selectedTab.textContent = event.detail.value;
+        });
+      }
+
     });
   </script>
 
