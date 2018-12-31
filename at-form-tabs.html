@@ -1,6 +1,9 @@
 <link rel="import" href="../tangere/tangere.html" />
-<link rel="import" href="at-form-tab.html">
+<link rel="import" href="../at-carbon-tabs/at-carbon-tab.html">
+<link rel="import" href="../at-i18n/at-i18n-behavior.html">
+<link rel="import" href="../at-form-behaviors/at-form-behaviors.html">
 <link rel="import" href="../at-core-style-classes/at-core-style-classes.html">
+<link rel="import" href="../iron-label/iron-label.html">
 
 <dom-module id="at-form-tabs">
   <template>
@@ -10,27 +13,107 @@
         box-sizing: border-box;
       }
 
+      :host([hidden]) {
+        display: none !important;
+      }
+
+      :host[hidden] {
+        display: none !important;
+      }
+
       #tabsContainer {
         height: 100%;
       }
 
-      at-form-tab {
+      at-carbon-tab {
         border-bottom: 2px solid transparent;
+        padding-bottom: 12px;
       }
 
-      at-form-tab.selected {
+      at-carbon-tab[disabled] {
+        pointer-events: none;
+      }
+
+      at-carbon-tab.selected {
         border-bottom: 2px solid var(--primary-color);
       }
 
     </style>
+    <div>
+      <iron-label hidden$="[[hideLabel]]" id="label" for="input">{{label}}</iron-label>
+    </div>
     <div id="tabsContainer" class="layout-horizontal layout-start-justified" on-click="_handleTabClick">at-form-tabs works!</div>
+    <div id="hint"></div>
   </template>
 </dom-module>
 
 <script>
   Polymer({
     is: "at-form-tabs",
+    behaviors: [Tangere.behaviors.i18n, Tangere.behaviors.formUIGeneric],
     properties: {
+      /**
+       * Element's label for element display purposes
+       * @property label
+       * @type String
+       * @default ""
+       */
+       label: {
+        type: String,
+        value: '',
+        title: 'Label'
+      },
+
+      /**
+       * When true label is hidden
+       * @property hideLabel
+       * @type Boolean
+       * @default false
+       */
+      hideLabel: {
+        type: Boolean,
+        value: false,
+        title: 'Do not show the label'
+      },
+
+      /**
+       * Element's disabled state
+       * @property disabled
+       * @type Boolean
+       * @default false
+       */
+      disabled: {
+        type: Boolean,
+        value: false,
+        observer: '_disabledChanged',
+        title: 'Field value can not be changed'
+      },
+
+      /**
+       * Hides the element. When hidden nothing is displayed for the element
+       * @property hide
+       * @type Boolean
+       * @default false
+       */
+      hide: {
+        type: Boolean,
+        value: false,
+        observer: '_hideChanged',
+        title: 'Field is invisible'
+      },
+
+      /**
+       * Element's required state for element validation purposes
+       * @property required
+       * @type Boolean
+       * @default false
+       */
+      required: {
+        type: Boolean,
+        value: false,
+        title: 'Input required'
+      },
+
       xvaluelist: {
         type: Array,
         value: function() {
@@ -52,6 +135,14 @@
               disabled: {
                 type: "boolean",
                 title: "Disabled"
+              },
+              badgeLabel: {
+                type: "string",
+                title: "Badge Label"
+              },
+              badgeColor: {
+                type: "string",
+                title: "Badge Color"
               }
             }
           }
@@ -78,11 +169,27 @@
         xtype: "enum",
       }
     },
+
+    $meta: [{
+      title: "Tabs",
+      type: "element",
+      xtype: "at-form-tabs",
+      events: ["value-changed"],
+      icon: "now:wrench"
+    }],
+
+    _disabledChanged: function(newValue, oldValue) {
+      this.toggleAttribute('disabled', newValue, this);
+    },
+
+    _hideChanged: function(newValue, oldValue) {
+      this.toggleAttribute('hidden', newValue, this);
+    },
+
     ready: function() {},
 
     _xvaluelistChanged: function(newValue, oldValue) {
-      console.log(JSON.stringify(newValue));
-      
+
       if (this._isString(newValue)) {
         try {
           this.xvaluelist = JSON.parse(newValue);
@@ -101,8 +208,10 @@
 
       var self = this;
       newValue.forEach(function(tabDef) {
-        var formTab = self.create('at-form-tab');
+        var formTab = self.create('at-carbon-tab');
         formTab.label = tabDef.title;
+        formTab.badgeLabel = tabDef.badgeLabel;
+        formTab.badgeColor = tabDef.badgeColor;
         Polymer.dom(formTab).classList.add('font-body1');
         self.toggleClass('selected', tabDef.value == self.value, formTab);
         formTab.setAttribute('id', tabDef.value);
@@ -120,7 +229,7 @@
 
     _handleTabClick: function(event) {
       var tab = event.target;
-      if (tab.is != "at-form-tab") return;
+      if (tab.is != "at-carbon-tab") return;
 
       this._selectTab(tab.id);
 
@@ -138,9 +247,12 @@
 
       var selector = '#'+id;
       current = Polymer.dom(this.$.tabsContainer).querySelector(selector);
-      if (current) {
-        Polymer.dom(current).classList.add('selected');
-      }
+      if (!current) return;
+
+      var disabled = current.getAttribute('disabled');
+      if (disabled || disabled == "") return;
+      
+      Polymer.dom(current).classList.add('selected');
     },
 
     _positionChagned: function(newValue, oldValue) {

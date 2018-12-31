@@ -10,24 +10,38 @@
   <link rel="import" href="../at-form-tabs.html">
 
   <style is="custom-style">
-    #elt {
+    .elt {
       height: 32px;
+    }
+
+    .demo-container {
+      margin-top: 32px;
     }
   </style>
 
 </head>
 <body unresolved>
-  <at-form-tabs id="elt"></at-form-tabs>
+  <div class="demo-container">
+    <at-form-tabs id="elt1" class="elt"></at-form-tabs>
+  
+    <div>
+      <div>Currently selected tab <span id="selectedTab1"></span></div>
+    </div>
+  </div>
 
-  <div>
-    <div>Currently selected tab <span id="selectedTab"></span></div>
+  <div class="demo-container">
+    <at-form-tabs id="elt2" class="elt"></at-form-tabs>
+  
+    <div>
+      <div>Currently selected tab <span id="selectedTab2"></span></div>
+    </div>
   </div>
 </div>
 
   <script>
     document.addEventListener('WebComponentsReady', function() {
-      var selectedTab = document.getElementById('selectedTab');
-      var elt = document.getElementById('elt');
+      var selectedTab = document.getElementById('selectedTab1');
+      var elt = document.getElementById('elt1');
 
       elt.xvaluelist = [
         { title: "Title 1", value: "v1" },
@@ -45,6 +59,27 @@
 
       elt.addEventListener('value-changed', function(event) {
         selectedTab.textContent = event.detail.value;
+      });
+
+      var selectedTab2 = document.getElementById('selectedTab2');
+      var elt2 = document.getElementById('elt2');
+
+      elt2.xvaluelist = [
+        { title: "Title 1", value: "v1" },
+        { title: "Title 2", value: "v2", disabled: true },
+        { title: "Title 3", value: "v3" },
+        { title: "Title 4", value: "v4", disabled: true },
+        { title: "Title 5", value: "v5" },
+        { title: "Title 6", value: "v6", disabled: true },
+        { title: "Title 7", value: "v7" },
+        { title: "Title 8", value: "v8", disabled: true },
+      ];
+
+      elt2.value = "v5";
+      selectedTab2.textContent = elt.value;
+
+      elt2.addEventListener('value-changed', function(event) {
+        selectedTab2.textContent = event.detail.value;
       });
     });
   </script>
