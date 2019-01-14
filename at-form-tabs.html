@@ -11,6 +11,10 @@
   <template>
     <style include="at-form-common">
       :host {
+        --tab-background-color: #EFF6FF;
+        --tab-icon-color: #0050FF;
+        --tab-text-color: #4A90E2;
+
         display: block;
         box-sizing: border-box;
       }
@@ -53,10 +57,10 @@
       }
 
       :host([tab-style="tab"]) at-carbon-tab.selected {
-        color: var(--primary-color) !important;
         border-bottom: 2px solid var(--primary-color);
+        color: var(--tab-text-color) !important;
 
-        background-image: linear-gradient(transparent 10%, var(--at-light-blue));
+        background-image: linear-gradient(transparent 10%, var(--tab-background-color));
       }
 
       :host([tab-style="tab"]) at-carbon-tab:before, 
@@ -88,16 +92,16 @@
       }
 
       :host([tab-style="tab"][size="compact"]) at-carbon-tab:hover label {
-        color: var(--primary-color);
+        color: var(--tab-text-color);
       }
 
       :host([tab-style="tab"][size="compact"]) at-carbon-tab:focus {
         outline: none;
-        background-image: linear-gradient(transparent 10%, var(--at-light-blue));
+        background-image: linear-gradient(transparent 10%, var(--tab-background-color));
       }
 
       :host([tab-style="tab"][size="compact"]) at-carbon-tab:focus label {
-        color: var(--primary-color);
+        color: var(--tab-text-color);
       }
 
       /*
@@ -113,32 +117,32 @@
       }
 
       :host([tab-style="tab"][size="large"]) at-carbon-tab.selected at-carbon-icon {
-        color: var(--primary-color);
+        color: var(--tab-text-color);
       }
 
       :host([tab-style="tab"][size="large"]) at-carbon-tab.selected label {
-        color: var(--primary-color);
+        color: var(--tab-text-color);
       }
 
       :host([tab-style="tab"][size="large"]) at-carbon-tab:hover at-carbon-icon {
-        color: var(--primary-color);
+        color: var(--tab-text-color);
       }
 
       :host([tab-style="tab"][size="large"]) at-carbon-tab:hover label {
-        color: var(--primary-color);
+        color: var(--tab-text-color);
       }
 
       :host([tab-style="tab"][size="large"]) at-carbon-tab:focus {
         outline: none;
-        background-image: linear-gradient(transparent 10%, var(--at-light-blue));
+        background-image: linear-gradient(transparent 10%, var(--tab-background-color));
       }
 
       :host([tab-style="tab"][size="large"]) at-carbon-tab:focus at-carbon-icon {
-        color: var(--primary-color);
+        color: var(--tab-text-color);
       }
 
       :host([tab-style="tab"][size="large"]) at-carbon-tab:focus label {
-        color: var(--primary-color);
+        color: var(--tab-text-color);
       }
 
       /*
@@ -154,8 +158,8 @@
       }
 
       :host([tab-style="pill"]) at-carbon-tab.selected {
-        color: var(--primary-color) !important;
-        background-color: var(--at-light-blue) !important;
+        color: var(--tab-text-color) !important;
+        background-color: var(--tab-background-color) !important;
       }
       
       /*
@@ -163,7 +167,7 @@
       */
       
       :host([tab-style="pill"][size="compact"]) at-carbon-tab.selected label {
-        color: var(--primary-color) !important;
+        color: var(--tab-text-color) !important;
       }
 
       :host([tab-style="pill"][size="compact"]) at-carbon-tab at-carbon-icon {
@@ -184,7 +188,7 @@
       }
 
       :host([tab-style="pill"][size="compact"]) at-carbon-tab:focus label {
-        color: var(--primary-color);
+        color: var(--tab-text-color);
       }
       
       /*
@@ -201,11 +205,11 @@
       }
 
       :host([tab-style="pill"][size="large"]) at-carbon-tab.selected at-carbon-icon {
-        color: var(--primary-color) !important;
+        color: var(--tab-icon-color) !important;
       }
 
       :host([tab-style="pill"][size="large"]) at-carbon-tab.selected label {
-        color: var(--primary-color) !important;
+        color: var(--tab-text-color) !important;
       }
 
       :host([tab-style="pill"][size="large"]) at-carbon-tab:hover {
@@ -226,11 +230,11 @@
       }
 
       :host([tab-style="pill"][size="large"]) at-carbon-tab:focus at-carbon-icon {
-        color: var(--primary-color);
+        color: var(--tab-icon-color);
       }
 
       :host([tab-style="pill"][size="large"]) at-carbon-tab:focus label {
-        color: var(--primary-color);
+        color: var(--tab-text-color);
       }
 
     </style>
