@@ -53,6 +53,7 @@
       }
 
       :host([tab-style="tab"]) at-carbon-tab.selected {
+        color: var(--primary-color) !important;
         border-bottom: 2px solid var(--primary-color);
 
         background-image: linear-gradient(transparent 10%, var(--at-light-blue));
@@ -161,6 +162,10 @@
         PILL COMPACT styles
       */
       
+      :host([tab-style="pill"][size="compact"]) at-carbon-tab.selected label {
+        color: var(--primary-color) !important;
+      }
+
       :host([tab-style="pill"][size="compact"]) at-carbon-tab at-carbon-icon {
         display: none !important;
       }
@@ -196,11 +201,11 @@
       }
 
       :host([tab-style="pill"][size="large"]) at-carbon-tab.selected at-carbon-icon {
-        color: var(--primary-color);
+        color: var(--primary-color) !important;
       }
 
       :host([tab-style="pill"][size="large"]) at-carbon-tab.selected label {
-        color: var(--primary-color);
+        color: var(--primary-color) !important;
       }
 
       :host([tab-style="pill"][size="large"]) at-carbon-tab:hover {
