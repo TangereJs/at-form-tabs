@@ -337,6 +337,10 @@
                 type: "boolean",
                 title: "Disabled"
               },
+              icon: {
+                type: "string",
+                title: "Icon"
+              },
               badgeLabel: {
                 type: "string",
                 title: "Badge Label"
@@ -373,7 +377,7 @@
       tabStyle: {
         type: String,
         value: "default",
-        observer: "_positionChagned",
+        observer: "_tabStyleChanged",
         xvaluelist: [
           { title: "Default", value: "default" },
           { title: "Tab", value: "tab" },
@@ -385,7 +389,7 @@
       size: {
         type: String,
         value: "compact",
-        observer: "_positionChagned",
+        observer: "_sizeChanged",
         xvaluelist: [
           { title: "Compact", value: "compact" },
           { title: "Large", value: "large" }
@@ -486,6 +490,16 @@
       });
 
       this.selected = newValue[0].value;
+    },
+
+    _tabStyleChanged: function(newValue, oldValue) {
+      Polymer.dom(this).removeAttribute('tab-style');
+      Polymer.dom(this).setAttribute('tab-style', newValue);
+    },
+
+    _sizeChanged: function(newValue, oldValue) {
+      Polymer.dom(this).removeAttribute('size');
+      Polymer.dom(this).setAttribute('size',  newValue);
     },
 
     _valueChanged: function(newValue, oldValue) {
