@@ -1,160 +1,164 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
+  <head>
+    <title>at-form-tabs</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>at-form-tabs</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../at-form-tabs.html" />
 
-  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../at-form-tabs.html">
+    <style is="custom-style">
+      .demo-container {
+        margin-top: 16px;
+      }
 
-  <style is="custom-style">
-    .demo-container {
-      margin-top: 32px;
-    }
+      .layout-container {
+        padding: 16px;
+        border: 1px solid grey;
 
-    .layout-row {
-      display: flex;
-    }
+        max-width: 1024px;
+        margin: 0 auto;
+        margin-top: 16px;
+      }
 
-    .flex-6 {
-      flex: 6;
-    }
-  </style>
-
-</head>
-<body unresolved>
-  
-  <div class="layout-row">
-
-    <div class="flex-6">
+      .flex-6 {
+        flex: 6;
+      }
+    </style>
+  </head>
+  <body unresolved>
+    <div class="layout-container">
       <div class="demo-container">
         <h4>Default tab style with compact size</h4>
-        
-        <at-form-tabs id="elt1" tab-style="default" size="compact"></at-form-tabs>
-      
+
+        <at-form-tabs
+          id="elt1"
+          tab-style="default"
+          size="compact"
+        ></at-form-tabs>
+
         <div>
           <div>Currently selected tab <span id="selectedTab1"></span></div>
         </div>
       </div>
-    
-      <div class="demo-container">
-        <h4>TAB tab style with compact size</h4>
 
-        <at-form-tabs id="elt2" tab-style="tab" size="compact"></at-form-tabs>
-      
-        <div>
-          <div>Currently selected tab <span id="selectedTab2"></span></div>
-        </div>
-      </div>
-    
-      <div class="demo-container">
-        <h4>PILL tab style with compact size</h4>
-
-        <at-form-tabs id="elt3" tab-style="pill" size="compact"></at-form-tabs>
-      
-        <div>
-          <div>Currently selected tab <span id="selectedTab3"></span></div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="flex-6">
       <div class="demo-container">
         <h4>Default tab style with large size</h4>
         <at-form-tabs id="elt4" tab-style="default" size="large"></at-form-tabs>
-      
+
         <div>
           <div>Currently selected tab <span id="selectedTab4"></span></div>
         </div>
       </div>
-    
+    </div>
+
+    <div class="layout-container">
+      <div class="demo-container">
+        <h4>TAB tab style with compact size</h4>
+
+        <at-form-tabs id="elt2" tab-style="tab" size="compact"></at-form-tabs>
+
+        <div>
+          <div>Currently selected tab <span id="selectedTab2"></span></div>
+        </div>
+      </div>
+
       <div class="demo-container">
         <h4>TAB tab style with large size</h4>
 
         <at-form-tabs id="elt5" tab-style="tab" size="large"></at-form-tabs>
-      
+
         <div>
           <div>Currently selected tab <span id="selectedTab5"></span></div>
         </div>
       </div>
-    
+    </div>
+
+    <div class="layout-container">
+      <div class="demo-container">
+        <h4>PILL tab style with compact size</h4>
+
+        <at-form-tabs id="elt3" tab-style="pill" size="compact"></at-form-tabs>
+
+        <div>
+          <div>Currently selected tab <span id="selectedTab3"></span></div>
+        </div>
+      </div>
+
       <div class="demo-container">
         <h4>PILL tab style with large size</h4>
         <at-form-tabs id="elt6" tab-style="pill" size="large"></at-form-tabs>
-      
+
         <div>
           <div>Currently selected tab <span id="selectedTab6"></span></div>
         </div>
       </div>
     </div>
 
-  </div>
-  
-</div>
+    <script>
+      document.addEventListener("WebComponentsReady", function() {
+        var valuelist1 = [
+          { title: "Title 1", value: "v1", icon: "now:alert" },
+          { title: "Title 2", value: "v2", icon: "now:alert" },
+          { title: "Title 3", value: "v3", icon: "now:alert" },
+          { title: "Title 4", value: "v4", icon: "now:alert" },
+          { title: "Title 5", value: "v5", icon: "now:alert" },
+          { title: "Title 6", value: "v6", icon: "now:alert" },
+          { title: "Title 7", value: "v7", icon: "now:alert" },
+          { title: "Title 8", value: "v8", icon: "now:alert" }
+        ];
+        initDemo("elt1", "selectedTab1", valuelist1, "v5");
 
-  <script>
-    document.addEventListener('WebComponentsReady', function() {
-      
-      var valuelist1 = [
-        { title: "Title 1", value: "v1", icon: "now:alert" },
-        { title: "Title 2", value: "v2", icon: "now:alert"  },
-        { title: "Title 3", value: "v3", icon: "now:alert"  },
-        { title: "Title 4", value: "v4", icon: "now:alert"  },
-        { title: "Title 5", value: "v5", icon: "now:alert"  },
-        { title: "Title 6", value: "v6", icon: "now:alert"  },
-        { title: "Title 7", value: "v7", icon: "now:alert"  },
-        { title: "Title 8", value: "v8", icon: "now:alert"  },
-      ];
-      initDemo('elt1', 'selectedTab1', valuelist1, "v5");
-      
+        var valuelist2 = [
+          { title: "Title 1", value: "v1", icon: "now:alert" },
+          { title: "Title 2", value: "v2", icon: "now:alert" },
+          { title: "Title 3", value: "v3", icon: "now:alert" },
+          { title: "Title 4", value: "v4", icon: "now:alert" },
+          { title: "Title 5", value: "v5", icon: "now:alert" },
+          { title: "Title 6", value: "v6", icon: "now:alert" },
+          { title: "Title 7", value: "v7", icon: "now:alert" },
+          { title: "Title 8", value: "v8", icon: "now:alert" }
+        ];
 
-      var valuelist2 = [
-        { title: "Title 1", value: "v1", icon: "now:alert" },
-        { title: "Title 2", value: "v2", icon: "now:alert", disabled: true },
-        { title: "Title 3", value: "v3", icon: "now:alert" },
-        { title: "Title 4", value: "v4", icon: "now:alert", disabled: true },
-        { title: "Title 5", value: "v5", icon: "now:alert" },
-        { title: "Title 6", value: "v6", icon: "now:alert", disabled: true },
-        { title: "Title 7", value: "v7", icon: "now:alert" },
-        { title: "Title 8", value: "v8", icon: "now:alert", disabled: true }
-      ];
+        initDemo("elt2", "selectedTab2", valuelist2, "v5");
 
-      initDemo('elt2', 'selectedTab2', valuelist2, "v5");
+        var valuelist3 = [
+          { title: "Title 1", value: "v1", icon: "now:alert" },
+          { title: "Title 2", value: "v2", icon: "now:alert" },
+          { title: "Title 3", value: "v3", icon: "now:alert" },
+          { title: "Title 4", value: "v4", icon: "now:alert" },
+          { title: "Title 5", value: "v5", icon: "now:alert" },
+          { title: "Title 6", value: "v6", icon: "now:alert" },
+          { title: "Title 7", value: "v7", icon: "now:alert" },
+          { title: "Title 8", value: "v8", icon: "now:alert" }
+        ];
+        initDemo("elt3", "selectedTab3", valuelist3, "", false);
 
-      var valuelist3 = [
-        { title: "Title 1", value: "v1", icon: "now:alert" },
-        { title: "Title 2", value: "v2", icon: "now:alert", disabled: true },
-        { title: "Title 3", value: "v3", icon: "now:alert" },
-        { title: "Title 4", value: "v4", icon: "now:alert", disabled: true },
-        { title: "Title 5", value: "v5", icon: "now:alert" },
-        { title: "Title 6", value: "v6", icon: "now:alert", disabled: true },
-        { title: "Title 7", value: "v7", icon: "now:alert" },
-        { title: "Title 8", value: "v8", icon: "now:alert", disabled: true }
-      ];
-      initDemo('elt3', 'selectedTab3', valuelist3, "", false);
+        initDemo("elt4", "selectedTab4", valuelist1, "", false);
+        initDemo("elt5", "selectedTab5", valuelist1, "", false);
+        initDemo("elt6", "selectedTab6", valuelist1, "", false);
 
-      initDemo('elt4', 'selectedTab4', valuelist1, "", false);
-      initDemo('elt5', 'selectedTab5', valuelist1, "", false);
-      initDemo('elt6', 'selectedTab6', valuelist1, "", false);
-      
-      function initDemo(eltSelector, valueEchoSelector, xvaluelist, initialValue, required) {
-        var selectedTab = document.getElementById(valueEchoSelector);
-        var elt = document.getElementById(eltSelector);
+        function initDemo(
+          eltSelector,
+          valueEchoSelector,
+          xvaluelist,
+          initialValue,
+          required
+        ) {
+          var selectedTab = document.getElementById(valueEchoSelector);
+          var elt = document.getElementById(eltSelector);
 
-        elt.xvaluelist = xvaluelist;
-        elt.value = initialValue;
-        elt.autoValidate = true;
-        elt.required = !!required;
+          elt.xvaluelist = xvaluelist;
+          elt.value = initialValue;
+          elt.autoValidate = true;
+          elt.required = !!required;
 
-        elt.addEventListener('value-changed', function(event) {
-          selectedTab.textContent = event.detail.value;
-        });
-      }
-
-    });
-  </script>
-
-</body>
+          elt.addEventListener("value-changed", function(event) {
+            selectedTab.textContent = event.detail.value;
+          });
+        }
+      });
+    </script>
+  </body>
 </html>

@@ -11,10 +11,6 @@
   <template>
     <style include="at-form-common">
       :host {
-        --tab-background-color: #EFF6FF;
-        --tab-icon-color: #0050FF;
-        --tab-text-color: #4A90E2;
-
         display: block;
         box-sizing: border-box;
       }
@@ -29,212 +25,6 @@
 
       #tabsContainer {
         height: 100%;
-      }
-
-      at-carbon-tab {
-        border-bottom: 2px solid transparent;
-        padding-bottom: 12px;
-      }
-
-      at-carbon-tab[disabled] {
-        pointer-events: none;
-      }
-
-      at-carbon-tab.selected {
-        border-bottom: 2px solid var(--primary-color);
-      }
-
-      /*
-        STYLES for the tab-style tab
-      */
-
-      :host([tab-style="tab"]) at-carbon-tab {
-        position: relative;
-        margin: 0 auto;
-        padding: 12px;
-
-        border-bottom: 1px solid lightgray;
-      }
-
-      :host([tab-style="tab"]) at-carbon-tab.selected {
-        border-bottom: 2px solid var(--primary-color);
-        color: var(--tab-text-color) !important;
-
-        background-image: linear-gradient(transparent 10%, var(--tab-background-color));
-      }
-
-      :host([tab-style="tab"]) at-carbon-tab:before, 
-      :host([tab-style="tab"]) at-carbon-tab:after {
-        content: "";
-        position: absolute;
-
-        top: -1px;
-        bottom: -1px;
-
-        width: 1px;
-        background-image: linear-gradient(transparent 30%, lightgray 100%);
-      }
-
-      :host([tab-style="tab"]) at-carbon-tab:before {
-        left: -1px;
-      }
-
-      :host([tab-style="tab"]) at-carbon-tab:after {
-        right: 0px;
-      }
-
-
-      /*
-        COMPACT TAB styles
-      */
-      :host([tab-style="tab"][size="compact"]) at-carbon-tab at-carbon-icon {
-        display: none !important;
-      }
-
-      :host([tab-style="tab"][size="compact"]) at-carbon-tab:hover label {
-        color: var(--tab-text-color);
-      }
-
-      :host([tab-style="tab"][size="compact"]) at-carbon-tab:focus {
-        outline: none;
-        background-image: linear-gradient(transparent 10%, var(--tab-background-color));
-      }
-
-      :host([tab-style="tab"][size="compact"]) at-carbon-tab:focus label {
-        color: var(--tab-text-color);
-      }
-
-      /*
-        LARGE TAB styles
-      */
-      :host([tab-style="tab"][size="large"]) at-carbon-tab at-carbon-icon {
-        display: block !important;
-        margin: 0 auto;
-      }
-
-      :host([tab-style="tab"][size="large"]) at-carbon-tab label {
-        display: block !important;
-      }
-
-      :host([tab-style="tab"][size="large"]) at-carbon-tab.selected at-carbon-icon {
-        color: var(--tab-text-color);
-      }
-
-      :host([tab-style="tab"][size="large"]) at-carbon-tab.selected label {
-        color: var(--tab-text-color);
-      }
-
-      :host([tab-style="tab"][size="large"]) at-carbon-tab:hover at-carbon-icon {
-        color: var(--tab-text-color);
-      }
-
-      :host([tab-style="tab"][size="large"]) at-carbon-tab:hover label {
-        color: var(--tab-text-color);
-      }
-
-      :host([tab-style="tab"][size="large"]) at-carbon-tab:focus {
-        outline: none;
-        background-image: linear-gradient(transparent 10%, var(--tab-background-color));
-      }
-
-      :host([tab-style="tab"][size="large"]) at-carbon-tab:focus at-carbon-icon {
-        color: var(--tab-text-color);
-      }
-
-      :host([tab-style="tab"][size="large"]) at-carbon-tab:focus label {
-        color: var(--tab-text-color);
-      }
-
-      /*
-        STYLES for the tab-style pill
-      */
-
-      :host([tab-style="pill"]) at-carbon-tab {
-        position: relative;
-        margin: 0 auto;
-        padding: 12px;
-      
-        border: 1px solid lightgray;
-      }
-
-      :host([tab-style="pill"]) at-carbon-tab.selected {
-        color: var(--tab-text-color) !important;
-        background-color: var(--tab-background-color) !important;
-      }
-      
-      /*
-        PILL COMPACT styles
-      */
-      
-      :host([tab-style="pill"][size="compact"]) at-carbon-tab.selected label {
-        color: var(--tab-text-color) !important;
-      }
-
-      :host([tab-style="pill"][size="compact"]) at-carbon-tab at-carbon-icon {
-        display: none !important;
-      }
-
-      :host([tab-style="pill"][size="compact"]) at-carbon-tab:hover {
-        background-color: var(--at-light-grey);
-      }
-
-      :host([tab-style="pill"][size="compact"]) at-carbon-tab:hover label {
-        color: var(--at-black);
-      }
-
-      :host([tab-style="pill"][size="compact"]) at-carbon-tab:focus {
-        outline: none;
-        background-color: var(--at-light-grey);
-      }
-
-      :host([tab-style="pill"][size="compact"]) at-carbon-tab:focus label {
-        color: var(--tab-text-color);
-      }
-      
-      /*
-        PILL LARGE styles
-      */
-
-      :host([tab-style="pill"][size="large"]) at-carbon-tab at-carbon-icon {
-        display: block !important;
-        margin: 0 auto;
-      }
-
-      :host([tab-style="pill"][size="large"]) at-carbon-tab label {
-        display: block !important;
-      }
-
-      :host([tab-style="pill"][size="large"]) at-carbon-tab.selected at-carbon-icon {
-        color: var(--tab-icon-color) !important;
-      }
-
-      :host([tab-style="pill"][size="large"]) at-carbon-tab.selected label {
-        color: var(--tab-text-color) !important;
-      }
-
-      :host([tab-style="pill"][size="large"]) at-carbon-tab:hover {
-        background-color: var(--at-light-grey);
-      }
-
-      :host([tab-style="pill"][size="large"]) at-carbon-tab:hover at-carbon-icon {
-        color: var(--at-black);
-      }
-
-      :host([tab-style="pill"][size="large"]) at-carbon-tab:hover label {
-        color: var(--at-black);
-      }
-
-      :host([tab-style="pill"][size="large"]) at-carbon-tab:focus {
-        outline: none;
-        background-color: var(--at-light-grey);
-      }
-
-      :host([tab-style="pill"][size="large"]) at-carbon-tab:focus at-carbon-icon {
-        color: var(--tab-icon-color);
-      }
-
-      :host([tab-style="pill"][size="large"]) at-carbon-tab:focus label {
-        color: var(--tab-text-color);
       }
 
     </style>
@@ -464,23 +254,14 @@
       var self = this;
       newValue.forEach(function(tabDef) {
         var formTab = self.create('at-carbon-tab');
-      formTab.badgeLabel = tabDef.badgeLabel;
+        formTab.badgeLabel = tabDef.badgeLabel;
         formTab.badgeColor = tabDef.badgeColor;
+        formTab.icon = tabDef.icon;
+        formTab.label = tabDef.title;
         
-        if (tabDef.icon != undefined) {
-          var iconElt = self.create('at-carbon-icon');
-          iconElt.icon = tabDef.icon;
-          Polymer.dom(formTab).appendChild(iconElt);
+        formTab.tabStyle = self.tabStyle;
+        formTab.size = self.size;
 
-          var labelElt = self.create('label');
-          labelElt.textContent = tabDef.title;
-          Polymer.dom(formTab).appendChild(labelElt);
-
-        } else {
-          formTab.label = tabDef.title;
-        }
-        
-        
         Polymer.dom(formTab).classList.add('font-body1');
         self.toggleClass('selected', tabDef.value == self.value, formTab);
         formTab.setAttribute('id', tabDef.value);
@@ -493,13 +274,21 @@
     },
 
     _tabStyleChanged: function(newValue, oldValue) {
-      Polymer.dom(this).removeAttribute('tab-style');
-      Polymer.dom(this).setAttribute('tab-style', newValue);
+      if (this.xvaluelist.length == 0) return;
+
+      var formTabs = Polymer.dom(this.$.tabsContainer).querySelectorAll('at-carbon-tab');
+      Array.prototype.forEach.call(formTabs, function(formTab, index) {
+        formTab.tabStyle = newValue;
+      });
     },
 
     _sizeChanged: function(newValue, oldValue) {
-      Polymer.dom(this).removeAttribute('size');
-      Polymer.dom(this).setAttribute('size',  newValue);
+      if (this.xvaluelist.length == 0) return;
+
+      var formTabs = Polymer.dom(this.$.tabsContainer).querySelectorAll('at-carbon-tab');
+      Array.prototype.forEach.call(formTabs, function(formTab, index) {
+        formTab.size = newValue;
+      });
     },
 
     _valueChanged: function(newValue, oldValue) {
