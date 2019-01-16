@@ -30,7 +30,7 @@
     <div id="atContainer" class="at-container">
       <iron-label hidden$="[[hideLabel]]" id="label" for="input">{{label}}</iron-label>
       <div id="contentContainer" class="at-content-container">
-        <at-carbon-tabs id="carbonTabs" tabs="[[xvaluelist]]" position="[[position]]" tab-style="[[tabStyle]]" size="[[size]]"></at-carbon-tabs>
+        <at-carbon-tabs id="carbonTabs" tabs="[[xvaluelist]]" position="[[position]]" tab-style="[[tabStyle]]" size="[[size]]" on-selected-changed="_handleSelectedChanged"></at-carbon-tabs>
       </div>
       <div id="hint"></div>
     </div>
@@ -229,7 +229,7 @@
     },
 
     _valueChanged: function(newValue, oldValue) {
-      this._selectTab(newValue);
+      this.$.carbonTabs.selected = newValue;
       
       if (this._isReady) {
         this._fireValueChangedEvent(this.value);
@@ -237,6 +237,10 @@
 
       // show validation result when autoValidate is enabled
       if(this.autoValidate) this._validate(true);
+    },
+
+    _handleSelectedChanged: function(event) {
+      this.value = event.detail.value;
     },
 
     validate: function (showError) {
@@ -276,28 +280,6 @@
       var contentContainer = this.$.contentContainer;
       this.toggleClass('error', !isValid, contentContainer);
     },
-
-    _selectTab: function(id) {
-      var current = Polymer.dom(this.$.tabsContainer).querySelector('.selected');
-      if (current) {
-        Polymer.dom(current).classList.remove('selected');
-      }
-
-      if (!this._isString(id) || id.length == 0) return;
-
-      var selector = '#'+id;
-      current = Polymer.dom(this.$.tabsContainer).querySelector(selector);
-      if (!current) return;
-
-      var disabled = current.getAttribute('disabled');
-      if (disabled || disabled == "") return;
-      
-      Polymer.dom(current).classList.add('selected');
-    },
-
-    _isString: function(obj) { return Object.prototype.toString.call(obj) === "[object String]"; },
-
-    _isArray: function(obj) { return Object.prototype.toString.call(obj) === "[object Array]"; }
 
   });
 </script>
